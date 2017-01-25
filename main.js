@@ -34,7 +34,8 @@ Animation.prototype.drawFrame = function (tick, ctx, x, y) {
             
             gameEngine.didLeftClick = false;
             x = 0;
-            currentCharacter.setIdleRightAnimation();	
+            currentCharacter.setIdleRightAnimation();
+            
         }
     }
     
@@ -62,16 +63,22 @@ Animation.prototype.isDone = function () {
 
 function Knight(game) {
     var idleRightAnimationSpriteSheet = AM.getAsset("./img/knightidleright.png");
+    var idleLeftAnimationSpriteSheet = AM.getAsset("./img/knightidleleft.png");
     var walkRightAnimationSpriteSheet = AM.getAsset("./img/knightwalkright.png");
+    var walkLeftAnimationSpriteSheet = AM.getAsset("./img/knightwalkleft.png");
     var attackRightAnimationSpriteSheet = AM.getAsset("./img/knightattackright.png");
-    
+    var attackLeftAnimationSpriteSheet = AM.getAsset("./img/knightattackleft.png");
+
     this.name = "knight";
 	
     this.animationCurrent = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 4, 0.1, 14, true, 1);
     
     this.animationIdleRight = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 4, 0.1, 14, true, 1);
+    this.animationIdleLeft = new Animation(this, idleLeftAnimationSpriteSheet, 192, 192, 2, 0.1, 14, true, 1);
     this.animationWalkRight = new Animation(this, walkRightAnimationSpriteSheet, 192, 192, 4, 0.07, 12, true, 1);
+    this.animationWalkLeft = new Animation(this, walkLeftAnimationSpriteSheet, 192, 192, 2, 0.07, 12, true, 1);
     this.animationAttackRight = new Animation(this, attackRightAnimationSpriteSheet, 384, 192, 3, 0.03, 14, false, 1);
+    this.animationAttackLeft = new Animation(this, attackLeftAnimationSpriteSheet, 384, 192, 2, 0.03, 14, false, 1);
 	
     this.state = "idleRight";
     this.x = 0;
@@ -99,7 +106,7 @@ Knight.prototype.update = function() {
 
 //set current animation properties to idle right animation values
 Knight.prototype.setIdleRightAnimation = function() {
-    console.log('setIdleRight');
+    console.log('set Idle Right');
 
     var idleRightSpriteSheet = this.animationIdleRight.spriteSheet;
     var frameWidth = this.animationIdleRight.frameWidth;
@@ -127,6 +134,42 @@ Knight.prototype.setIdleRightAnimation = function() {
     this.animationCurrent.scale = scale;
 
 }
+
+
+//set animation properties to idle left animation values
+Knight.prototype.setIdleLeftAnimation = function() {
+    console.log('set Idle Left');
+
+    left = true;
+    right = false;
+
+    var idleLeftSpriteSheet = this.animationIdleLeft.spriteSheet;
+    var frameWidth = this.animationIdleLeft.frameWidth;
+    var frameDuration = this.animationIdleLeft.frameDuration;
+    var frameHeight = this.animationIdleLeft.frameHeight;
+    var sheetWidth = this.animationIdleLeft.sheetWidth;
+    var frames = this.animationIdleLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "idleLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = idleLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+
+}
+
 
 Knight.prototype.setWalkRightAnimation = function() {
     console.log("set walk right");
@@ -156,6 +199,36 @@ Knight.prototype.setWalkRightAnimation = function() {
     this.animationCurrent.loop = loop;
     this.animationCurrent.scale = scale;
 }
+
+Knight.prototype.setWalkLeftAnimation = function() {
+    console.log("set walk left");
+
+    var walkLeftSpriteSheet = this.animationWalkLeft.spriteSheet;
+    var frameWidth = this.animationWalkLeft.frameWidth;
+    var frameDuration = this.animationWalkLeft.frameDuration;
+    var frameHeight = this.animationWalkLeft.frameHeight;
+    var sheetWidth = this.animationWalkLeft.sheetWidth;
+    var frames = this.animationWalkLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "walkLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = walkLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+}
+
 
 //set current animation properties to attack right animation values
 Knight.prototype.setAttackRightAnimation = function() {
@@ -190,11 +263,47 @@ Knight.prototype.setAttackRightAnimation = function() {
     //console.log(this);
 }
 
+//set current animation properties to attack right animation values
+Knight.prototype.setAttackLeftAnimation = function() {
+    //console.log('setAttackLeft');
+
+    //get attack right animation property values
+    var attackLeftSpriteSheet = this.animationAttackLeft.spriteSheet;
+    var frameWidth = this.animationAttackLeft.frameWidth;
+    var frameDuration = this.animationAttackLeft.frameDuration;
+    var frameHeight = this.animationAttackLeft.frameHeight;
+    var sheetWidth = this.animationAttackLeft.sheetWidth;
+    var frames = this.animationAttackLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = false;
+    var scale = 1;
+
+    this.state = "attackLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = attackLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+
+    //console.log(this);
+}
+
 //Constructor for gunwoman
 function Gunwoman(game) {
     var idleRightSpriteSheet = AM.getAsset("./img/gunwomanidleright.png");
     var walkRightSpriteSheet = AM.getAsset("./img/gunwomanwalkright.png");
     var attackRightSpriteSheet = AM.getAsset("./img/gunwomanattackright.png");
+    var idleLeftSpriteSheet = AM.getAsset("./img/gunwomanidleleft.png");
+    var walkLeftSpriteSheet = AM.getAsset("./img/gunwomanwalkleft.png");
+    var attackLeftSpriteSheet = AM.getAsset("./img/gunwomanattackleft.png");
 
     this.name = "gunwoman";
     
@@ -203,6 +312,9 @@ function Gunwoman(game) {
     this.animationIdleRight = new Animation(this, idleRightSpriteSheet, 192, 192, 5, 0.1, 22, true, 1);
     this.animationWalkRight = new Animation(this, walkRightSpriteSheet, 192, 192, 4, 0.05, 14, true, 1);
     this.animationAttackRight = new Animation(this, attackRightSpriteSheet, 384, 192, 4, 0.04, 23, false, 1);
+    this.animationIdleLeft = new Animation(this, idleLeftSpriteSheet, 192, 192, 5, 0.1, 22, true, 1);
+    this.animationWalkLeft = new Animation(this, walkLeftSpriteSheet, 192, 192, 2, 0.05, 14, true, 1);
+    this.animationAttackLeft = new Animation(this, attackLeftSpriteSheet, 384, 192, 4, 0.04, 23, false, 1);
     
     this.state = "idleRight";
     this.x = 0;
@@ -219,14 +331,20 @@ function Mage(game) {
     var idleRightAnimationSpriteSheet = AM.getAsset("./img/mageIdleRight.png");
     var walkRightAnimationSpriteSheet = AM.getAsset("./img/mageWalkRight.png");
     var attackRightAnimationSpriteSheet = AM.getAsset("./img/mageAttackRight.png");
-    
+    var idleLeftAnimationSpriteSheet = AM.getAsset("./img/mageIdleLeft.png");
+    var walkLeftAnimationSpriteSheet = AM.getAsset("./img/mageWalkLeft.png");
+    var attackLeftAnimationSpriteSheet = AM.getAsset("./img/mageAttackLeft.png");
+
     this.name = "mage";
     
-    this.animationCurrent = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 3, 0.1, 8, true, 1);
+    this.animationCurrent = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 4, 0.1, 8, true, 1);
     
-    this.animationIdleRight = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 3, 0.1, 8, true, 1);
+    this.animationIdleRight = new Animation(this, idleRightAnimationSpriteSheet, 192, 192, 4, 0.1, 8, true, 1);
     this.animationWalkRight = new Animation(this, walkRightAnimationSpriteSheet, 192, 192, 3, 0.07, 8, true, 1);
     this.animationAttackRight = new Animation(this, attackRightAnimationSpriteSheet, 384, 192, 3, 0.03, 17, false, 1);
+    this.animationIdleLeft = new Animation(this, idleLeftAnimationSpriteSheet, 192, 192, 4, 0.1, 8, true, 1);
+    this.animationWalkLeft = new Animation(this, walkLeftAnimationSpriteSheet, 192, 192, 4, 0.07, 8, true, 1);
+    this.animationAttackLeft = new Animation(this, attackLeftAnimationSpriteSheet, 384, 192, 2, 0.03, 17, false, 1);
     
     this.state = "idleRight";
     this.x = 0;
@@ -234,6 +352,7 @@ function Mage(game) {
     this.speed = 100;
     this.game = game;
     this.ctx = game.ctx;
+    //Entity.call(this, this.game, 200, 400);
 }
 
 Mage.prototype.draw = function() {
@@ -243,6 +362,7 @@ Mage.prototype.draw = function() {
         this.animationCurrent.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     }
 }
+
 
 Mage.prototype.update = function() {
     Entity.prototype.update.call(this);
@@ -278,6 +398,37 @@ Mage.prototype.setIdleRightAnimation = function() {
     this.animationCurrent.scale = scale;
 }
 
+//set current animation properties to idle left animation values
+Mage.prototype.setIdleLeftAnimation = function() {
+    console.log("set idle left");
+
+    var idleLeftSpriteSheet = this.animationIdleLeft.spriteSheet;
+    var frameWidth = this.animationIdleLeft.frameWidth;
+    var frameDuration = this.animationIdleLeft.frameDuration;
+    var frameHeight = this.animationIdleLeft.frameHeight;
+    var sheetWidth = this.animationIdleLeft.sheetWidth;
+    var frames = this.animationIdleLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "idleLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = idleLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+}
+
+
 Mage.prototype.setWalkRightAnimation = function() {
     console.log("set walk right");
 
@@ -296,6 +447,35 @@ Mage.prototype.setWalkRightAnimation = function() {
 
     //set current animation property values
     this.animationCurrent.spriteSheet = walkRightSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+}
+
+Mage.prototype.setWalkLeftAnimation = function() {
+    console.log("set walk left");
+
+    var walkLeftSpriteSheet = this.animationWalkLeft.spriteSheet;
+    var frameWidth = this.animationWalkLeft.frameWidth;
+    var frameDuration = this.animationWalkLeft.frameDuration;
+    var frameHeight = this.animationWalkLeft.frameHeight;
+    var sheetWidth = this.animationWalkLeft.sheetWidth;
+    var frames = this.animationWalkLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "walkLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = walkLeftSpriteSheet;
     this.animationCurrent.frameWidth = frameWidth;
     this.animationCurrent.frameDuration = frameDuration;
     this.animationCurrent.frameHeight = frameHeight;
@@ -339,6 +519,40 @@ Mage.prototype.setAttackRightAnimation = function() {
 
     //console.log(this);
 }
+
+//set current animation properties to attack left animation values
+Mage.prototype.setAttackLeftAnimation = function() {
+    //console.log('setAttackRight');
+
+    //get attack left animation property values
+    var attackLeftSpriteSheet = this.animationAttackLeft.spriteSheet;
+    var frameWidth = this.animationAttackLeft.frameWidth;
+    var frameDuration = this.animationAttackLeft.frameDuration;
+    var frameHeight = this.animationAttackLeft.frameHeight;
+    var sheetWidth = this.animationAttackLeft.sheetWidth;
+    var frames = this.animationAttackLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = false;
+    var scale = 1;
+
+    this.state = "attackRight";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = attackLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+
+    //console.log(this);
+}
+
 /*
     live versian 
     branch:gh-page
@@ -420,6 +634,36 @@ Gunwoman.prototype.setIdleRightAnimation = function() {
     this.animationCurrent.scale = scale;
 }
 
+//set current animation properties to idle left animation values
+Gunwoman.prototype.setIdleLeftAnimation = function() {
+    console.log("set idle left");
+
+    var idleLeftSpriteSheet = this.animationIdleLeft.spriteSheet;
+    var frameWidth = this.animationIdleLeft.frameWidth;
+    var frameDuration = this.animationIdleLeft.frameDuration;
+    var frameHeight = this.animationIdleLeft.frameHeight;
+    var sheetWidth = this.animationIdleLeft.sheetWidth;
+    var frames = this.animationIdleLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "idleLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = idleLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+}
+
 Gunwoman.prototype.setWalkRightAnimation = function() {
     console.log("set walk right");
 
@@ -438,6 +682,36 @@ Gunwoman.prototype.setWalkRightAnimation = function() {
 
     //set current animation property values
     this.animationCurrent.spriteSheet = walkRightSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+}
+
+
+Gunwoman.prototype.setWalkLeftAnimation = function() {
+    console.log("set walk left");
+
+    var walkLeftSpriteSheet = this.animationWalkLeft.spriteSheet;
+    var frameWidth = this.animationWalkLeft.frameWidth;
+    var frameDuration = this.animationWalkLeft.frameDuration;
+    var frameHeight = this.animationWalkLeft.frameHeight;
+    var sheetWidth = this.animationWalkLeft.sheetWidth;
+    var frames = this.animationWalkLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = true;
+    var scale = 1;
+
+    this.state = "walkLeft";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = walkLeftSpriteSheet;
     this.animationCurrent.frameWidth = frameWidth;
     this.animationCurrent.frameDuration = frameDuration;
     this.animationCurrent.frameHeight = frameHeight;
@@ -481,6 +755,39 @@ Gunwoman.prototype.setAttackRightAnimation = function() {
     //console.log(this);
 }
 
+Gunwoman.prototype.setAttackLeftAnimation = function() {
+    console.log('setAttackLeft');
+
+    //get attack right animation property values
+    var attackLeftSpriteSheet = this.animationAttackLeft.spriteSheet;
+    var frameWidth = this.animationAttackLeft.frameWidth;
+    var frameDuration = this.animationAttackLeft.frameDuration;
+    var frameHeight = this.animationAttackLeft.frameHeight;
+    var sheetWidth = this.animationAttackLeft.sheetWidth;
+    var frames = this.animationAttackLeft.frames;
+    var totalTime = frameDuration * frames;
+    var elapsedTime = 0;
+    var loop = false;
+    var scale = 1;
+
+    this.state = "attack Right";
+
+    //set current animation property values
+    this.animationCurrent.spriteSheet = attackLeftSpriteSheet;
+    this.animationCurrent.frameWidth = frameWidth;
+    this.animationCurrent.frameDuration = frameDuration;
+    this.animationCurrent.frameHeight = frameHeight;
+    this.animationCurrent.sheetWidth = sheetWidth;
+    this.animationCurrent.frames = frames;
+    this.animationCurrent.totalTime = totalTime;
+    this.animationCurrent.elapsedTime = elapsedTime;
+    this.animationCurrent.loop = loop;
+    this.animationCurrent.scale = scale;
+
+    //console.log(this);
+}
+
+
 // no inheritance
 function Background(game, spritesheet) {
     this.x = 0;
@@ -499,6 +806,8 @@ Background.prototype.update = function () {
 };
 
 
+
+
 var gameWorld = document.getElementById("gameWorld");
 gameWorld.width = window.innerWidth;
 gameWorld.height = window.innerHeight;
@@ -507,22 +816,33 @@ AM.queueDownload("./img/background.jpg");
 
 //knight
 AM.queueDownload("./img/knightidleright.png");
+AM.queueDownload("./img/knightidleleft.png");
 AM.queueDownload("./img/knightattackright.png");
+AM.queueDownload("./img/knightattackleft.png");
 AM.queueDownload("./img/knightwalkright.png");
+AM.queueDownload("./img/knightwalkleft.png");
 
 //gunwoman
 AM.queueDownload("./img/gunwomanidleright.png");
 AM.queueDownload("./img/gunwomanwalkright.png");
 AM.queueDownload("./img/gunwomanattackright.png");
 AM.queueDownload("./img/gunwomanjumpright.png");
+AM.queueDownload("./img/gunwomanidleleft.png");
+AM.queueDownload("./img/gunwomanwalkleft.png");
+AM.queueDownload("./img/gunwomanattackleft.png");
 
 //mage
 AM.queueDownload("./img/mageWalkRight.png");
 AM.queueDownload("./img/mageIdleRight.png");
 AM.queueDownload("./img/mageAttackRight.png");
 
+AM.queueDownload("./img/mageWalkLeft.png");
+AM.queueDownload("./img/mageIdleLeft.png");
+AM.queueDownload("./img/mageAttackLeft.png");
+
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
+
     canvas.focus();
     
     var ctx = canvas.getContext("2d");

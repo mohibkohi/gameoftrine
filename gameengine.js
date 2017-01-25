@@ -19,6 +19,10 @@ function GameEngine() {
     this.assetManager = null;
     this.d = false;
     this.a = false;
+
+    this.left = false;
+    this.right = true;
+
     this.space = false;
     this.didLeftClick = false;
     this.currentCharacter = null;
@@ -109,8 +113,13 @@ GameEngine.prototype.startInput = function() {
         //console.log(e.which);
 
         if (e.which === 1 && !that.didLeftClick) { //Left Mouse button pressed
-            that.didLeftClick = true;
-            currentCharacter.setAttackRightAnimation();
+        	if (that.right){
+            	that.didLeftClick = true;
+           		currentCharacter.setAttackRightAnimation();
+           	} else {
+           		that.didLeftClick = true;
+           		currentCharacter.setAttackLeftAnimation();
+           	}
 
         } else if (e.which === 2) { //Middle Mouse button pressed     
             console.log('Middle Mouse button pressed');
@@ -131,7 +140,19 @@ GameEngine.prototype.startInput = function() {
         if (e.code === "KeyD" && !that.d  && !that.didLeftClick) {
             that.d = true;
 
+            that.right = true;
+            that.left = false;
+
             currentCharacter.setWalkRightAnimation();
+            
+        } else if (e.code === "KeyA" && !that.a  && !that.didLeftClick) {
+            that.a = true;
+
+            that.right = false;
+            that.left = true;
+
+            currentCharacter.setWalkLeftAnimation();
+            console.log("this is a");
             
         } else if (e.code === "KeyF" && !that.didLeftClick) {
 
@@ -151,6 +172,11 @@ GameEngine.prototype.startInput = function() {
             that.d = false;
             currentCharacter.setIdleRightAnimation();
 
+        } else if (e.code === "KeyA" && !that.didLeftClick) {
+            that.a = false;
+
+            currentCharacter.setIdleLeftAnimation();
+            
         }
     }, false);
 
@@ -255,6 +281,7 @@ Entity.prototype.draw = function(ctx) {
 }
 
 Entity.prototype.rotateAndCache = function(image, angle) {
+
     var offscreenCanvas = document.createElement('canvas');
     var size = Math.max(image.width, image.height);
     offscreenCanvas.width = size;
